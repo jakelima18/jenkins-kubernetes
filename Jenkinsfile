@@ -7,6 +7,11 @@ pipeline {
                 sh 'composer install'
             }
         }
+        stage('PreTesting') {
+            steps {
+                sh 'ansible-playbook /home/easyit/mysql.yaml'
+            }
+        }
         stage('Test') {
             steps {
                 sh 'vendor/bin/phpunit'
