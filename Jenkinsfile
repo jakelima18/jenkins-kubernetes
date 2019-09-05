@@ -11,7 +11,7 @@ pipeline {
         stage('PreTesting') {
             agent { node {label 'master'}}
             steps {
-                sh 'ansible-playbook /home/easyit/mysql.yaml'
+                sh 'ansible-playbook /home/easyit/laravel/mysql.yaml'
             }
         }
         stage('Test') {
