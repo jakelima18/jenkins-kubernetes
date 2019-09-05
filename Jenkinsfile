@@ -7,14 +7,10 @@ pipeline {
                 sh 'composer install'
             }
         }
-        stage('Pre-Testing') {
-            steps {
-                sh 'ansible-playbook /home/easyit/laravel/mysql.yaml'
-        }
         stage('Test') {
             steps {
                 sh 'vendor/bin/phpunit'
-            }   
+            }
     post {
        failure {
              emailext(
@@ -33,6 +29,5 @@ pipeline {
             }     /*emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'*/
         }
     }
-     }    
+        }    
         }
-}
