@@ -1,18 +1,21 @@
 pipeline {
     /* insert Declarative Pipeline here */
-   agent { node {label 'qa'}}
+   agent none
    stages {
         stage('Build') {
+            agent { node {label 'qa'}}
             steps {
                 sh 'composer install'
             }
         }
         stage('PreTesting') {
+            agent { node {label 'master'}}
             steps {
                 sh 'ansible-playbook /home/easyit/mysql.yaml'
             }
         }
         stage('Test') {
+            agent { node {label 'qa'}}
             steps {
                 sh 'vendor/bin/phpunit'
             }
