@@ -20,7 +20,7 @@ pipeline {
                 sh 'vendor/bin/phpunit'
             }
         }
-        stage('Deploy') {
+        stage('Deploy Desenvolvimento') {
             agent { node {label 'master'}}
             steps {
                 sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
