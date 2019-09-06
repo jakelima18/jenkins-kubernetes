@@ -25,7 +25,8 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
             }
-        }    
+        }
+   }    
 post {
     failure {
       emailext(
@@ -43,5 +44,4 @@ post {
              )     
             }     /*emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'*/
         }
-    }
 }
