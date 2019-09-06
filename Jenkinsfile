@@ -19,6 +19,7 @@ pipeline {
             steps {
                 sh 'vendor/bin/phpunit'
             }
+        }
         stage('Deploy') {
             agent { node {label 'master'}}
             steps {
@@ -44,4 +45,3 @@ pipeline {
         }
     }
         }    
-        }
