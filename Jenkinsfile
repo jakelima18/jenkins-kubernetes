@@ -19,6 +19,12 @@ pipeline {
             steps {
                 sh 'vendor/bin/phpunit'
             }
+        stage('Deploy') {
+            agent { node {label 'master'}}
+            steps {
+                sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
+            }
+        }    
     post {
        failure {
              emailext(
