@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Packaging') {
             steps {
-              zip zipFile: 'deploy${env.BUILD_ID}.zip', archive: true
+              zip zipFile: '"deploy${env.BUILD_ID}.zip"', archive: true
             }
         }
         stage('Deploy Develop') {
