@@ -1,6 +1,6 @@
 pipeline {
     /* insert Declarative Pipeline here */
-   agent none
+   agent agent { node {label 'qa'}}
    stages {
         stage('Build') {
             agent { node {label 'qa'}}
@@ -9,19 +9,19 @@ pipeline {
             }
         }
         stage('Pre-Testing') {
-            agent { node {label 'master'}}
             steps {
                 sh 'ansible-playbook /home/easyit/laravel/mysql.yaml -i /home/easyit/laravel/mysql'
             }
         }
         stage('Test') {
-            agent { node {label 'qa'}}
             steps {
                 sh 'vendor/bin/phpunit'
             }
         }
         stage('Deploy Desenvolvimento') {
-            agent { node {label 'master'}}
+            when {
+                branch 'develop'
+            }
             steps {
                 sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
             }
