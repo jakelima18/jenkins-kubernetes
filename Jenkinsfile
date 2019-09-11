@@ -19,6 +19,7 @@ pipeline {
         }
         stage('Packaging') {
             steps {
+              sh 'rm -rf deploy.zip'  
               zip zipFile: 'deploy.zip', archive: true
             }
         }
