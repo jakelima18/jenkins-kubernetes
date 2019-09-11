@@ -1,6 +1,6 @@
 pipeline {
     /* insert Declarative Pipeline here */
-   agent agent { node {label 'qa'}}
+   agent { node {label 'qa'}}
    stages {
         stage('Build') {
             agent { node {label 'qa'}}
