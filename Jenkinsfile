@@ -3,7 +3,6 @@ pipeline {
    agent { node {label 'qa'}}
    stages {
         stage('Build') {
-            agent { node {label 'qa'}}
             steps {
                 sh 'composer install'
             }
@@ -18,7 +17,7 @@ pipeline {
                 sh 'vendor/bin/phpunit'
             }
         }
-        stage('Deploy QA') {
+        stage('Deploy Desenvolvimento') {
             when {
                 branch 'develop'
             }
