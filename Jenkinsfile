@@ -21,7 +21,6 @@ pipeline {
             steps {
               sh 'rm -rf deploy.zip'  
               zip zipFile: 'deploy.zip', archive: true
-              sh 'mv deploy.zip deploy${env.BUILD_NUMBER}.zip'
             }
         }
         stage('Deploy Develop') {
