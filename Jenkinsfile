@@ -19,7 +19,9 @@ pipeline {
         }
         stage('Packaging') {
             steps {
-              zip zipFile: '${env.BUILD_ID}.zip', archive: true
+              sh 'rm -rf deploy.zip'  
+              zip zipFile: 'deploy.zip', archive: true
+              sh 'mv deploy.zip deploy${env.BUILD_NUMBER}.zip'
             }
         }
         stage('Deploy Develop') {
