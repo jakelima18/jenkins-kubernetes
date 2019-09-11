@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Packaging') {
             steps {
-              zip zipFile: 'test.zip', archive: false, dir: '/home/jenkins/artefatos'
+              zip zipFile: 'test.zip', archive: true
             }
         }
         stage('Deploy Develop') {
