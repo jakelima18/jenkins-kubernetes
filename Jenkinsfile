@@ -17,6 +17,11 @@ pipeline {
                 sh 'vendor/bin/phpunit'
             }
         }
+        stage('Packaging') {
+            steps {
+              zip zipFile 'test.zip', archive: false, dir: '/home/jenkins/artefatos'
+            }
+        }
         stage('Deploy Develop') {
             when {
                 branch 'develop'
