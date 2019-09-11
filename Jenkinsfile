@@ -17,7 +17,7 @@ pipeline {
                 sh 'vendor/bin/phpunit'
             }
         }
-        stage('Deploy Desenvolvimento') {
+        stage('Deploy Develop') {
             when {
                 branch 'develop'
             }
