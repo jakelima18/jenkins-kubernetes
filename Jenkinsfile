@@ -7,7 +7,7 @@ pipeline {
                 sh 'composer install'
             }
         }
-        stage('Pre-Testing') {
+        stage('Pre-Teste') {
             steps {
                 sh 'ansible-playbook /home/easyit/laravel/mysql.yaml -i /home/easyit/laravel/mysql'
             }
