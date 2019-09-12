@@ -31,6 +31,14 @@ pipeline {
                 sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
             }
         }
+        stage('Deploy Prod') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh 'ansible-playbook /home/easyit/laravel/playbook-prod.yml'
+            }
+        }
    }    
   post {
     failure {
