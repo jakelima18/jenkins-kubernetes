@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/acme-challenge-type: http01
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - forum.hackathonshift.com.br
+    secretName: prod-forum-tls
+  rules:
+  - host: forum.hackathonshift.com.br
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: web
+          servicePort: 80
+  

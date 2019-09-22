@@ -1,42 +1,10 @@
 pipeline {
     /* insert Declarative Pipeline here */
-   agent { node {label 'qa'}}
+   agent any
    stages {
         stage('Build') {
             steps {
-                sh 'composer install'
-            }
-        }
-        stage('Pre-Teste') {
-            steps {
-                sh 'ansible-playbook /home/easyit/laravel/mysql.yaml -i /home/easyit/laravel/mysql'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'vendor/bin/phpunit'
-            }
-        }
-        stage('Packaging') {
-            steps {
-              sh 'rm -rf deploy.zip'  
-              zip zipFile: 'deploy.zip', archive: true
-            }
-        }
-        stage('Deploy Develop') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                sh 'ansible-playbook /home/easyit/laravel/playbook.yml'
-            }
-        }
-        stage('Deploy Prod') {
-            when {
-                branch 'master'
-            }
-            steps {
-                sh 'ansible-playbook /home/easyit/laravel/playbook-prod.yaml'
+                sh 'docker build -t jacksonlima91/forum-app:v2'
             }
         }
    }    
