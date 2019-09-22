@@ -2,7 +2,7 @@ pipeline {
     /* insert Declarative Pipeline here */
    agent any
    stages {
-        stage('Build') {
+        stage('Buil') {
             steps {
                 sh 'docker build -t jacksonlima91/forum-app:v2 .'
             }
