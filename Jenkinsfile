@@ -4,6 +4,7 @@ pipeline {
    stages {
         stage('Buil') {
             steps {
+                sh 'cp .env.example .env'
                 sh 'docker build -t jacksonlima91/forum-app:v2 .'
             }
         }
