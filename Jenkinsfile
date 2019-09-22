@@ -4,7 +4,7 @@ pipeline {
    stages {
         stage('Build') {
             steps {
-                sh 'docker build -t jacksonlima91/forum-app:v2'
+                sh 'docker build -t jacksonlima91/forum-app:v2 .'
             }
         }
    }    
