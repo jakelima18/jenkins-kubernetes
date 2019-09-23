@@ -14,7 +14,7 @@ pipeline {
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
                 /*sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'*/
                 /*newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")*/
-                /*sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'*/
+                sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
         }
         stage('Build') {
