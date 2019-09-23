@@ -6,6 +6,7 @@ pipeline {
             steps {
                 sh 'cp .env.example .env'
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
+                sh "sed -i 's/DB_USERNAME.*/DB_USERNAME=homestead/g' .env.testing"
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
                 sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
