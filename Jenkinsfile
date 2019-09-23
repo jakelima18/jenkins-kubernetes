@@ -26,6 +26,7 @@ pipeline {
                 sh 'docker push jacksonlima91/forum-app:$BUILD_NUMBER'
                 sh 'docker push jacksonlima91/forum-web:$BUILD_NUMBER'
             }
+        }
    }    
   post {
     failure {
