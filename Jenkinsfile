@@ -13,8 +13,8 @@ pipeline {
         }
         stage('Test'){
             steps{
-                sh "sed 's/image:*jacksonlima91/forum-app.*/image: jacksonlima91/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
-                sh "sed 's/image:*jacksonlima91/forum-web.*/image: jacksonlima91/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "sed 's/image:.*jacksonlima91/forum-app.*/image: jacksonlima91/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "sed 's/image:.*jacksonlima91/forum-web.*/image: jacksonlima91/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
 
             }
         }
