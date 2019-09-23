@@ -5,16 +5,16 @@ pipeline {
         stage('Build Docker') {
             steps {
                 sh 'cp .env.example .env'
-                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
-                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env"
+                sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
+                sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
                 sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
         }
         stage('Teste'){
             steps{
-                sh "sed 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
-                sh "sed 's/forum-web.*/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "sed -i 's/forum-web.*/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
                 sh "docker-compose up -d"
 
             }
