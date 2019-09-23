@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registryCredential = 'dockerhub'
+        newApp = ''
+    }
     /* insert Declarative Pipeline here */
    agent any
    stages {
@@ -8,7 +12,8 @@ pipeline {
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
                 sh "sed -i 's/DB_USERNAME.*/DB_USERNAME=homestead/g' .env.testing"
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
-                sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'
+                /*sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'*/
+                newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
         }
@@ -23,8 +28,8 @@ pipeline {
         }
         stage('Push'){
             steps{
-                sh 'docker push jacksonlima91/forum-app:$BUILD_NUMBER'
-                sh 'docker push jacksonlima91/forum-web:$BUILD_NUMBER'
+                docker.withRegistry('','dockerhub')
+                newApp.push()
             }
         }
    }    
