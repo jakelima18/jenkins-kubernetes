@@ -36,8 +36,8 @@ pipeline {
         stage('Push'){
             steps{
                 script {
-                docker.withRegistry('','dockerhub')
-                newApp.push()
+                   docker.withRegistry('https://index.docker.io/v1/','dockerhub')
+                   newApp.push()
               }  
             }
         }
