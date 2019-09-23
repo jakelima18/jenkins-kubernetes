@@ -11,7 +11,7 @@ pipeline {
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
         }
-        stage('Test'){
+        stage('Testing'){
             steps{
                 sh "sed 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
                 sh "sed 's/forum-web.*/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
