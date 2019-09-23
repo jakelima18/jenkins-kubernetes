@@ -5,8 +5,8 @@ pipeline {
         stage('Build Docker') {
             steps {
                 sh 'cp .env.example .env'
-                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env.testing'"
-                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env'"
+                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
+                sh "sed 's/DB_HOST.*/DB_HOST=database/g' .env"
                 sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
