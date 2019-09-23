@@ -13,7 +13,6 @@ services:
 
   #  The Application
   app:
-    build: .
     image: jacksonlima91/forum-app:v1
     ports:
         - 9000:9000
@@ -23,9 +22,6 @@ services:
       - database
   # The Web Server
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile_Nginx
     image: jacksonlima91/forum-web:v1  
     ports:
       - 4000:80
