@@ -12,15 +12,18 @@ pipeline {
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
                 sh "sed -i 's/DB_USERNAME.*/DB_USERNAME=homestead/g' .env.testing"
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
+                /*sh 'docker build -t jacksonlima91/forum-app:$BUILD_NUMBER .'*/
+                /*newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")*/
                 sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'
             }
         }
         stage('Build') {
-            steps{
-                script{
+            steps {
+                script {
                     newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")
                 }
             }
+        }
         stage('Test'){
             steps{
                 sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
@@ -32,11 +35,12 @@ pipeline {
         }
         stage('Push'){
             steps{
-                script{
-                     docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-                        newApp.push()
-                     }
-                }
+                script {
+                   docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
+                     newApp.push()
+                   }
+                   
+              }  
             }
         }
    }    
