@@ -17,7 +17,7 @@ pipeline {
                 /*sh 'docker build -t jacksonlima91/forum-web:$BUILD_NUMBER -f Dockerfile_Nginx .'*/
             }
         }
-        stage('Prepare environment') {
+        stage('Build') {
             steps {
                 script {
                     newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")
