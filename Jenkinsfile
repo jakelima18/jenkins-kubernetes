@@ -15,6 +15,7 @@ pipeline {
             steps{
                 sh "sed 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
                 sh "sed 's/forum-web.*/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "docker-compose up -d"
 
             }
         }
