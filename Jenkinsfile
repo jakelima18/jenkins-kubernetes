@@ -42,6 +42,11 @@ pipeline {
                 }
             }
         }
+        stage('Deploy'){
+            steps{
+                sh 'kubectl set image deployment/forum-app backend=$newApp --kubeconfig /var/lib/jenkins/.kube/config'
+            }
+        }
    }    
   post {
     failure {
