@@ -8,6 +8,9 @@ RUN ["chmod", "+x", "/entrypoint/check_db.sh"]
 
 WORKDIR /var/www/forum
 
+RUN ["chmod", "+x", "waitforit.sh"]
+
+
 RUN apt-get update && \
     apt-get install -y \
         zlib1g-dev libpng-dev git wget && docker-php-ext-install gd zip pdo pdo_mysql
