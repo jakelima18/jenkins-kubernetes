@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Develop'){
+        stage('Deploy Dev'){
             when {
                 branch 'develop'
             }
