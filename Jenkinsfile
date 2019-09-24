@@ -45,6 +45,7 @@ pipeline {
         stage('Deploy'){
             steps{
                 sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
+                sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-web:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
             }
         }
    }    
