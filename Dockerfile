@@ -8,7 +8,7 @@ RUN ["chmod", "+x", "/entrypoint/check_db.sh"]
 
 WORKDIR /var/www/forum
 
-RUN ["chmod", "+x", "/var/www/forum/waitforit.sh.sh"]
+RUN ["chmod", "+x", "waitforit.sh"]
 
 
 RUN apt-get update && \
