@@ -7,7 +7,7 @@ pipeline {
     /* insert Declarative Pipeline here */
    agent any
    stages {
-        stage('Prepare environment') {
+        stage('Prepare env') {
             steps {
                 sh 'cp .env.example .env'
                 sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
