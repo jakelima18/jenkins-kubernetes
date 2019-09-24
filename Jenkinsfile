@@ -42,7 +42,19 @@ pipeline {
                 }
             }
         }
-        stage('Deploy'){
+        stage('Deploy Dev'){
+            when {
+                branch 'develop'
+            }
+            steps{
+                sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER -n develop --kubeconfig /var/lib/jenkins/.kube/config'
+                sh 'kubectl set image deployment/forum-web backend=jacksonlima91/forum-web:$BUILD_NUMBER -n develop --kubeconfig /var/lib/jenkins/.kube/config'
+            }
+        }
+        stage('Deploy Prod'){
+            when {
+                branch 'master'
+            }
             steps{
                 sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
                 sh 'kubectl set image deployment/forum-web backend=jacksonlima91/forum-web:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
