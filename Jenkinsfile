@@ -13,7 +13,7 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-        mountPath: /kaniko
+        mountPath: /kaniko/.docker
       - name: context
         mountPath: /context  
   volumes:
@@ -24,7 +24,7 @@ spec:
           name: jenkins-docker-cfg
           items:
             - key: .dockerconfigjson
-              path: .docker/config.json
+              path: config.json
   - name: context
     emptyDir: {}                    
 """
