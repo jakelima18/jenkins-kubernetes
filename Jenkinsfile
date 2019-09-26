@@ -13,7 +13,7 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-        mountPath: /root/.docker
+        mountPath: /kaniko/.docker/config.json
   volumes:
   - name: jenkins-docker-cfg
     secret:
