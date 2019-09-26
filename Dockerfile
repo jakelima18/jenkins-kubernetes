@@ -23,8 +23,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 RUN chown -R www-data:www-data /var/www/forum
 
-RUN php artisan key:generate
-
 ENTRYPOINT ["sh", "/entrypoint/check_db.sh"]
 
 
