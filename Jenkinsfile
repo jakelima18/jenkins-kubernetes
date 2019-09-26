@@ -1,83 +1,33 @@
-pipeline {
-    environment {
-        registryCredential = 'dockerhub'
-        newApp = ''
-        newWeb = ''
+def label = "kaniko-${UUID.randomUUID().toString()}"
+podTemplate(name: 'kaniko', label: label, yaml: """
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - /busybox/cat
+    tty: true
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /root
+  volumes:
+  - name: jenkins-docker-cfg
+      - secret:
+          name: jenkins-docker-cfg
+"""
+  ) {
+  node(label) {
+    stage('Build with Kaniko') {
+      git 'https://github.com/jakelima18/forum-laravel-kubernetes.git'
+      container(name: 'kaniko', shell: '/busybox/sh') {
+          sh '''#!/busybox/sh
+          /kaniko/executor -f Dockerfile --destination=jacksonlima91/forum-app:$BUILD_NUMBER  
+          '''
+      }
     }
-    /* insert Declarative Pipeline here */
-   agent any
-   stages {
-        stage('Prepare env') {
-            steps {
-                sh 'cp .env.example .env'
-                sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env.testing"
-                sh "sed -i 's/DB_USERNAME.*/DB_USERNAME=homestead/g' .env.testing"
-                sh "sed -i 's/DB_HOST.*/DB_HOST=database/g' .env"
-            }
-        }
-        stage('Build') {
-            steps{
-                script{
-                    newApp = docker.build("jacksonlima91/forum-app:$BUILD_NUMBER")
-                    newWeb = docker.build("jacksonlima91/forum-web:$BUILD_NUMBER", "-f Dockerfile_Nginx .")
-                }
-            }
-        }
-        stage('Test'){
-            steps{
-                sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
-                sh "sed -i 's/forum-web.*/forum-web:$BUILD_NUMBER/g' docker-compose.yml"
-                sh "docker-compose up -d"
-                sh "sleep 30s"
-                sh "docker exec app vendor/bin/phpunit"
-                sh "docker-compose down"
-
-            }
-        }
-        stage('Push'){
-            steps{
-                script{
-                     docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-                        newApp.push()
-                        newWeb.push()
-                     }
-                }
-            }
-        }
-        stage('Deploy Dev'){
-            when {
-                branch 'develop'
-            }
-            steps{
-                sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER -n develop --kubeconfig /var/lib/jenkins/.kube/config'
-                sh 'kubectl set image deployment/forum-web backend=jacksonlima91/forum-web:$BUILD_NUMBER -n develop --kubeconfig /var/lib/jenkins/.kube/config'
-            }
-        }
-        stage('Deploy Prod'){
-            when {
-                branch 'master'
-            }
-            steps{
-                sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
-                sh 'kubectl set image deployment/forum-web backend=jacksonlima91/forum-web:$BUILD_NUMBER --kubeconfig /var/lib/jenkins/.kube/config'
-            }
-        }
-   }    
-  post {
-    failure {
-      emailext(
-            subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
-            body: """<p>A Build Falhou <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
-            recipientProviders: [[$class: 'DevelopersRecipientProvider'],
-            [$class: 'RequesterRecipientProvider']]
-             )
-       }
-    success {
-        emailext(
-            subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
-            body: """<p>A Build foi feita com sucesso <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
-            to: "jackson@schoolofnet.com"
-             )     
-            }     /*emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'*/
-        }
+  }
 }
