@@ -34,7 +34,7 @@ spec:
       git 'https://github.com/jakelima18/forum-laravel-kubernetes.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-          /kaniko/executor -f Dockerfile --context=dir:///workspace --destination=jacksonlima91/forum-app:$BUILD_NUMBER --verbosity debug 
+          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER --verbosity debug 
           '''
       }
     }
