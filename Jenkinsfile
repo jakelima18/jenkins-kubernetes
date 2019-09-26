@@ -13,7 +13,7 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-        mountPath: /root
+        mountPath: /kaniko
       - name: context
         mountPath: /context  
   volumes:
