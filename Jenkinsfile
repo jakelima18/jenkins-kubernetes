@@ -13,7 +13,7 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-        mountPath: /root
+        mountPath: /root/.docker
   volumes:
   - name: jenkins-docker-cfg
     secret:
