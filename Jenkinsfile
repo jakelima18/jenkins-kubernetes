@@ -13,12 +13,16 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-        mountPath: /kaniko/.docker/config.json
-        subPath: config.json
+        mountPath: /root
   volumes:
   - name: jenkins-docker-cfg
-    secret:
-      secretName: jenkins-docker-cfg        
+    projected:
+      sources:
+      - secret:
+          name: jenkins-docker-cfg
+          items:
+            - key: .dockerconfigjson
+              path: .docker/config.json        
 """
   ) {
   node(label) {
