@@ -22,7 +22,7 @@ spec:
 """
   ) {
   node(label) {
-    stage('Build with Kaniko') {
+    stage('Build  Kaniko') {
       git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
