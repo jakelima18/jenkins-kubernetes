@@ -21,7 +21,7 @@ spec:
 """
   ) {
   node(label) {
-    stage('Build  Kaniko') {
+    stage('Kaniko') {
       git 'https://github.com/jakelima18/forum-laravel-kubernetes.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
