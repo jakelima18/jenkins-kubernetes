@@ -14,6 +14,8 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /root
+      - name: context
+        mountPath: /context  
   volumes:
   - name: jenkins-docker-cfg
     projected:
@@ -22,7 +24,9 @@ spec:
           name: jenkins-docker-cfg
           items:
             - key: .dockerconfigjson
-              path: .docker/config.json        
+              path: .docker/config.json
+  - name: context
+    emptyDir: {}                    
 """
   ) {
   node(label) {
