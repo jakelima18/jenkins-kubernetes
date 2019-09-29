@@ -14,8 +14,6 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
-      - name: context
-        mountPath: /context  
   volumes:
   - name: jenkins-docker-cfg
     projected:
@@ -24,17 +22,17 @@ spec:
           name: jenkins-docker-cfg
           items:
             - key: .dockerconfigjson
-              path: config.json
-  - name: context
-    emptyDir: {}                    
+              path: config.json               
 """
-  ) {
+  ) 
+  
+  {
   node(label) {
     stage('Build Kaniko') {
-      git 'https://github.com/jakelima18/forum-laravel-kubernetes.git'
+      git 'https://github.com/jakelima18/jenkins-kubernetes.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER --verbosity debug 
+          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER 
           '''
       }
     }

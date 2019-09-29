@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - forum.hackathonshift.com.br
-    secretName: prod-forum-tls
+    - forum-laravel.hackathonshift.com.br
+    secretName: prod-forum-laravel
   rules:
-  - host: forum.hackathonshift.com.br
+  - host: forum-laravel.hackathonshift.com.br
     http:
       paths:
       - path: /
