@@ -82,7 +82,7 @@ spec:
   node {
   stage('Deploy') {
     container(name: 'kubectl')  {
-     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://jenkins-kubernetes-dns-ff937d99.hcp.centralus.azmk8s.io:443']) {
+     withKubeConfig([credentialsId: 'kubectl', serverUrl: '13.92.176.247']) {
       sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
       }
