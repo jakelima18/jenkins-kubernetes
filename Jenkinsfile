@@ -72,7 +72,7 @@ spec:
   {
   node(unit) {
     stage('Unit Test') {
-      container(name: 'backend') {
+      container(name: 'backend', shell: '/bin/bash') {
           sh 'vendor/bin/phpunit'
       }
     }
