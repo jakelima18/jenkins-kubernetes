@@ -79,3 +79,10 @@ spec:
     }
   }
   }
+  node {
+  stage('Apply Kubernetes files') {
+    withKubeConfig([credentialsId: 'kubectl', serverUrl: 'jenkins-kubernetes-dns-234ce642.hcp.eastus.azmk8s.io']) {
+      sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
+    }
+  }
+}
