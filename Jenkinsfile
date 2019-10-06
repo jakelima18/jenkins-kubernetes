@@ -45,7 +45,6 @@ podTemplate(name: 'phpunit', label: unit, yaml: """
 kind: Pod
 metadata:
   name: two-containers
-  namespace: test
 spec:
   containers:
   - name: backend
