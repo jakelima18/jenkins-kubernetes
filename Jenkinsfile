@@ -81,8 +81,10 @@ spec:
   }
   node {
   stage('Deploy') {
-    withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://jenkins-kubernetes-dns-ff937d99.hcp.centralus.azmk8s.io:443']) {
+    container(name: 'kubectl')  {
+     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://jenkins-kubernetes-dns-ff937d99.hcp.centralus.azmk8s.io:443']) {
       sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
+      }
   }
 }
