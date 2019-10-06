@@ -25,7 +25,37 @@ spec:
               path: config.json               
 """
   ) 
-  
+
+podTemplate(name: 'phpunit', label: label, yaml: """
+kind: Pod
+metadata:
+  name: two-containers
+  namespace: test
+spec:
+  containers:
+  - name: backend
+    image: jacksonlima91/forum-app:30
+
+  - name: mysql
+    image: mysql:5.7
+    args:
+        - "--ignore-db-dir=lost+found"
+    env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: schoolofnet
+        - name: MYSQL_PASSWORD
+          value: secret
+        - name: MYSQL_DATABASE
+          value: homestead
+        - name: MYSQL_USER
+          value: laravel_user
+    ports:
+    - containerPort: 3306
+      name: mysql         
+"""
+  ) 
+
+
   {
   node(label) {
     stage('Build Kaniko') {
