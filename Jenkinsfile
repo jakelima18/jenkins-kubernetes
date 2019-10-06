@@ -48,7 +48,7 @@ metadata:
 spec:
   containers:
   - name: backend
-    image: jacksonlima91/forum-app:30
+    image: jacksonlima91/forum-app:$BUILD_NUMBER
 
   - name: mysql
     image: mysql:5.7
