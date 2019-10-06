@@ -27,6 +27,20 @@ spec:
 """
   ) 
 
+
+
+  {
+  node(label) {
+    stage('Build Kaniko') {
+      git 'https://github.com/jakelima18/jenkins-kubernetes.git'
+      container(name: 'kaniko', shell: '/busybox/sh') {
+          sh '''#!/busybox/sh
+          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER 
+          '''
+      }
+    }
+   }
+  }
 podTemplate(name: 'phpunit', label: unit, yaml: """
 kind: Pod
 metadata:
@@ -56,18 +70,6 @@ spec:
 """
   ) 
 
-
-  {
-  node(label) {
-    stage('Build Kaniko') {
-      git 'https://github.com/jakelima18/jenkins-kubernetes.git'
-      container(name: 'kaniko', shell: '/busybox/sh') {
-          sh '''#!/busybox/sh
-          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER 
-          '''
-      }
-    }
-  }
   {
   node(unit) {
     stage('Unit Test') {
@@ -77,4 +79,3 @@ spec:
     }
   }
   }
-}
