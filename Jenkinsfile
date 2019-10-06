@@ -1,4 +1,5 @@
 def label = "kaniko-${UUID.randomUUID().toString()}"
+def unit  = "phpunit-${UUID.randomUUID().toString()}"
 podTemplate(name: 'kaniko', label: label, yaml: """
 kind: Pod
 metadata:
@@ -26,7 +27,7 @@ spec:
 """
   ) 
 
-podTemplate(name: 'phpunit', label: label, yaml: """
+podTemplate(name: 'phpunit', label: unit, yaml: """
 kind: Pod
 metadata:
   name: two-containers
@@ -67,4 +68,13 @@ spec:
       }
     }
   }
+  {
+  node(unit) {
+    stage('Unit Test') {
+      container(name: 'backend') {
+          sh 'vendor/bin/phpunit'
+      }
+    }
+  }
+
 }
