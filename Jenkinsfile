@@ -86,6 +86,7 @@ spec:
      withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
       sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
+    }
       }
   }
 }
