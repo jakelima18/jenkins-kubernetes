@@ -15,3 +15,7 @@ token:eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2Nvd
 helm install --name cicd stable/jenkins
 
 kubectl create secret generic jenkins-docker-cfg --from-file=.dockerconfigjson=config.json --type=kubernetes.io/dockerconfigjson
+
+helm install --name cert-manager --namespace cert-manager --version v0.10.1 jetstack/cert-manager
+
+sh '/var/www/forum/waitforit.sh localhost:3306 -t 90'
