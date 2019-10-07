@@ -19,3 +19,7 @@ kubectl create secret generic jenkins-docker-cfg --from-file=.dockerconfigjson=c
 helm install --name cert-manager --namespace cert-manager --version v0.10.1 jetstack/cert-manager
 
 sh '/var/www/forum/waitforit.sh localhost:3306 -t 90'
+
+envFrom:
+        - configMapRef:
+            name: laravel-config
