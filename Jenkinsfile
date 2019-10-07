@@ -88,6 +88,7 @@ spec:
          sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
       }
+    }
   }
   }
 }
