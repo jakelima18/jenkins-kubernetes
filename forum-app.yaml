@@ -19,3 +19,6 @@ spec:
         image: jacksonlima91/forum-app:v1
         ports:
         - containerPort: 9000
+        envFrom:
+        - configMapRef:
+            name: laravel-config  
