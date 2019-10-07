@@ -88,3 +88,5 @@ spec:
       }
   }
 }
+
+if (env.BRANCH_NAME.equals('master')){

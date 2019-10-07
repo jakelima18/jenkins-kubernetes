@@ -1,8 +1,5 @@
 def label = "kaniko-${UUID.randomUUID().toString()}"
-<<<<<<< HEAD
-=======
 def unit  = "phpunit-${UUID.randomUUID().toString()}"
->>>>>>> master
 podTemplate(name: 'kaniko', label: label, yaml: """
 kind: Pod
 metadata:
@@ -17,24 +14,6 @@ spec:
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
-<<<<<<< HEAD
-        mountPath: /root
-  volumes:
-  - name: jenkins-docker-cfg
-      - secret:
-          name: jenkins-docker-cfg
-"""
-  ) {
-  node(label) {
-    stage('Build with Kaniko') {
-      git 'https://github.com/jakelima18/forum-laravel-kubernetes.git'
-      container(name: 'kaniko', shell: '/busybox/sh') {
-          sh '''#!/busybox/sh
-          /kaniko/executor -f Dockerfile --destination=jacksonlima91/forum-app:$BUILD_NUMBER  
-          '''
-      }
-    }
-=======
         mountPath: /kaniko/.docker
   volumes:
   - name: jenkins-docker-cfg
@@ -101,27 +80,12 @@ spec:
   }
   }
   node {
-  stage('Deploy Dev') {
-    if (env.BRANCH_NAME.equals('develop')){
-      container(name: 'kubectl')  {
-         withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
-         sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER -n develop'
-    }
-      }
-    }
-
-  }
-}
-  node {
   stage('Deploy') {
     if (env.BRANCH_NAME.equals('master')){
-      container(name: 'kubectl')  {
-         withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
-         sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
+    container(name: 'kubectl')  {
+     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
+      sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
       }
-    }
-
->>>>>>> master
   }
 }
