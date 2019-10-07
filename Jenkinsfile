@@ -81,8 +81,7 @@ spec:
   }
   node {
   stage('Deploy') {
-    when { branch 'master' }
-
+    if (env.BRANCH_NAME.equals('master')){
     steps{
       container(name: 'kubectl')  {
          withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
