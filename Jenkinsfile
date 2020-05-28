@@ -22,7 +22,7 @@ spec:
       - secret:
           name: jenkins-docker-cfg
           items:
-            - key: .dockerconfigjson
+            - key: config.json
               path: config.json               
 """
   ) 
@@ -94,14 +94,12 @@ spec:
   stage('Deploy Prod') {
     if (env.BRANCH_NAME.equals('master')){
     container(name: 'kubectl')  {
-     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://13.92.176.247:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
+     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://jenkins-dns-3cf1a3b2.hcp.eastus.azmk8s.io:443', contextName: 'jenkins-kubernetes', clusterName: 'jenkins-kubernetes']) {
       sh 'kubectl set image deployment/forum-app backend=jacksonlima91/forum-app:$BUILD_NUMBER'
     }
     }
       }
   }
 }
-
-slackSend channel: '#deploy-com-jenkins',color: 'good',message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}"  
           
      
