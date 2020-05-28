@@ -2,7 +2,10 @@ apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
+<<<<<<< HEAD
   namespace: ingress-nginx
+=======
+>>>>>>> a35d40c5c8d719a13e2a4b16a744a29fbb9b1ee4
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory

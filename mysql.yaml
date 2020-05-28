@@ -35,7 +35,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: default
+  storageClassName: gp2
   resources:
     requests:
       storage: 5Gi

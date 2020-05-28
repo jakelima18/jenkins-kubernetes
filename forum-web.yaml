@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: jacksonlima91/forum-web:v1
+        image: 267270001270.dkr.ecr.us-east-1.amazonaws.com/forum-web:v1
         ports:
         - containerPort: 80

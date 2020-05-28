@@ -1,10 +1,14 @@
 # Create a namespace for your ingress resources
-kubectl create namespace ingress-basic
+kubectl.exe create namespace ingress-basic
 
 # Use Helm to deploy an NGINX ingress controller
+<<<<<<< HEAD
 helm install nginx stable/nginx-ingress --namespace nginx --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux --set controller.service.loadBalancerIP="20.42.38.173"
+=======
+helm install nginx stable/nginx-ingress --namespace ingress-basic --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
+>>>>>>> a35d40c5c8d719a13e2a4b16a744a29fbb9b1ee4
 
-helm install --name cert-manager --namespace cert-manager --version v0.10.0 jetstack/cert-manager
+helm install --name cert-manager --namespace cert-manager --version v0.13.0 jetstack/cert-manager
 
 https://jenkins-kubernetes-dns-ff937d99.hcp.centralus.azmk8s.io:443
 
@@ -26,6 +30,7 @@ envFrom:
 - configMapRef:
     name: laravel-config
 
+<<<<<<< HEAD
     storageClassName: gp2
 
     az network public-ip create --resource-group MC_arch_aks-son_eastus --name IPEgresso --allocation-method static
@@ -43,3 +48,6 @@ envFrom:
 kubectl.exe create secret generic jenkins-docker-cfg --from-file=.\config.json
 
 kubectl.exe create secret generic jenkins-docker-cfg --from-file=.\config.json
+=======
+    storageClassName: gp2
+>>>>>>> a35d40c5c8d719a13e2a4b16a744a29fbb9b1ee4

@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: jacksonlima91/forum-app:v1
+        image: 267270001270.dkr.ecr.us-east-1.amazonaws.com/forum-app:v1
         ports:
         - containerPort: 9000
         envFrom:

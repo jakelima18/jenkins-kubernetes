@@ -8,10 +8,17 @@ metadata:
 spec:
   tls:
   - hosts:
+<<<<<<< HEAD
     - forum-aks.hackathonshift.com.br
     secretName: tls-secret
   rules:
   - host: forum-aks.hackathonshift.com.br
+=======
+    - forum.hackathonshift.com.br
+    secretName: prod-forum-secret
+  rules:
+  - host: forum.hackathonshift.com.br 
+>>>>>>> a35d40c5c8d719a13e2a4b16a744a29fbb9b1ee4
     http:
       paths:
       - path: /
