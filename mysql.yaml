@@ -9,12 +9,11 @@ spec:
     - port: 3306
   selector:
     app: mysql
-  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: mysql-pvc
   labels:
     app: mysql
 spec:
@@ -71,4 +70,4 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-pvc
