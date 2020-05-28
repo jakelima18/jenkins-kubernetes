@@ -1,0 +1,9 @@
+eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster son-eks --approve
+
+aws iam create-policy --policy-name ALBIngressControllerIAMPolicy --policy-document https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/iam-policy.json
+
+arn:aws:iam::267270001270:policy/ALBIngressControllerIAMPolicy
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml
+
+eksctl create iamserviceaccount --region us-east-1 --name alb-ingress-controller --namespace kube-system --cluster son-eks --attach-policy-arn arn:aws:iam::267270001270:policy/ALBIngressControllerIAMPolicy --override-existing-serviceaccounts --approve

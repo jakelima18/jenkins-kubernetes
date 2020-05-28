@@ -2,7 +2,7 @@
 kubectl create namespace ingress-basic
 
 # Use Helm to deploy an NGINX ingress controller
-helm install stable/nginx-ingress --namespace ingress-basic --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux --set controller.service.loadBalancerIP="13.92.244.7"
+helm install nginx stable/nginx-ingress --namespace nginx --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux --set controller.service.loadBalancerIP="20.42.38.173"
 
 helm install --name cert-manager --namespace cert-manager --version v0.10.0 jetstack/cert-manager
 
@@ -14,12 +14,32 @@ token:eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2Nvd
 
 helm install --name cicd stable/jenkins
 
-kubectl create secret generic jenkins-docker-cfg --from-file=.dockerconfigjson=config.json --type=kubernetes.io/dockerconfigjson
+ 
 
 helm install --name cert-manager --namespace cert-manager --version v0.10.1 jetstack/cert-manager
+
+helm install cert-manager --namespace cert-manager --version v0.12.0 jetstack/cert-manager
 
 sh '/var/www/forum/waitforit.sh localhost:3306 -t 90'
 
 envFrom:
-        - configMapRef:
-            name: laravel-config
+- configMapRef:
+    name: laravel-config
+
+    storageClassName: gp2
+
+    az network public-ip create --resource-group MC_arch_aks-son_eastus --name IPEgresso --allocation-method static
+
+
+  1. Get your 'admin' user password by running:
+  printf $(kubectl get secret --namespace default cicd-jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+2. Get the Jenkins URL to visit by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/component=jenkins-master" -l "app.kubernetes.io/instance=cicd" -o jsonpath="{.items[0].metadata.name}")
+  echo http://127.0.0.1:8080
+  kubectl --namespace default port-forward $POD_NAME 8080:8080
+
+3. Login with the password from step 1 and the username: admin
+
+kubectl.exe create secret generic jenkins-docker-cfg --from-file=.\config.json
+
+kubectl.exe create secret generic jenkins-docker-cfg --from-file=.\config.json

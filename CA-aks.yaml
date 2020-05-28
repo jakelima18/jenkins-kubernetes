@@ -2,14 +2,13 @@ apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
-  namespace: ingress-nginx
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: jackson@schoolofnet.com
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-account
     solvers:
-       - http01:
-           ingress:
-             class: nginx
+    - http01:
+        ingress:
+          class: nginx
