@@ -1,8 +1,10 @@
 node {
     stage('Build and push') {
+    docker.withRegistry('https://index.docker.io/v1/', 'docker-login'){    
     checkout scm
 
     def customImage = docker.build("jacksonlima91/forum-app:${env.BUILD_ID}")
     customImage.push()
+    }
     }
 }
