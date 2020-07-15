@@ -1,0 +1,6 @@
+node {
+    checkout scm
+
+    def customImage = docker.build("jacksonlima91/forum-app:${env.BUILD_ID}")
+    }
+}
