@@ -7,4 +7,10 @@ node {
     customImage.push()
     }
     }
+    stage('Test'){
+            steps{
+                sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
+                sh "docker-compose up -d"
+            }
+        }
 }
