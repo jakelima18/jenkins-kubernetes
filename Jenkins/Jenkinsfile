@@ -1,10 +1,15 @@
 node('master') {
-    docker.withRegistry('https://index.docker.io/v1/', 'docker-login'){      
-    stage('Build and push') { 
+    stage('Build and push') {
+    docker.withRegistry('https://index.docker.io/v1/', 'docker-login'){    
     checkout scm
 
     def customImage = docker.build("jacksonlima91/forum-app:${env.BUILD_ID}")
     customImage.push()
     }
     }
+    stage('Deploy'){
+                sh "docker stop app"
+                sh "docker rm app"
+                sh "docker run -d -p 9000:9000 --name=app --network=jenkins-kubernetes_webnet jacksonlima91/forum-app:${env.BUILD_ID}"         
+        }
 }
