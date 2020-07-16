@@ -1,4 +1,4 @@
-node {
+node('master') {
     stage('Build and push') {
     docker.withRegistry('https://index.docker.io/v1/', 'docker-login'){    
     checkout scm
