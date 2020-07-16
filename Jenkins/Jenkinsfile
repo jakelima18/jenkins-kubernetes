@@ -8,7 +8,6 @@ node('master') {
     }
     }
     stage('Deploy'){
-                sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' /root/app/jenkins-kubernetes/docker-compose.yml"
-                step([$class: 'DockerComposeBuilder', dockerComposeFile: '/root/app/jenkins-kubernetes/docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: true])
+                sh "docker stop app"
         }
 }
