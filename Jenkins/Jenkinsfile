@@ -10,6 +10,6 @@ node('master') {
     stage('Deploy'){
                 sh "docker stop app"
                 sh "docker rm app"
-                sh "docker run -d -p 9000:9000 --name=app --networks=jenkins-kubernetes_webnet jacksonlima91/forum-app:${env.BUILD_ID}"         
+                sh "docker run -d -p 9000:9000 --name=app --network=jenkins-kubernetes_webnet jacksonlima91/forum-app:${env.BUILD_ID}"         
         }
 }
