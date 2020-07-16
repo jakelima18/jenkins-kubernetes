@@ -9,6 +9,6 @@ node {
     }
     stage('Deploy'){
                 sh "sed -i 's/forum-app.*/forum-app:$BUILD_NUMBER/g' docker-compose.yml"
-                sh "/usr/local/bin/docker-compose up -d"
+                sh "docker-compose up -d"
         }
 }
